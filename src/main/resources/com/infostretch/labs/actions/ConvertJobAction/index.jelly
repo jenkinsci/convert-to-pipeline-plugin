@@ -1,0 +1,56 @@
+<!--
+    Copyright 2017 Infostretch Corporation
+
+    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+    OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+    OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+    You should have received a copy of the GNU General Public License along with this program in the name of LICENSE.txt in the root folder of the distribution. If not, see https://opensource.org/licenses/gpl-3.0.html
+
+    For any inquiry or need additional information, please contact labs_support@infostretch.com
+-->
+
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:f="/lib/form">
+    <j:set var="instance" value="${it}"/>
+    <j:set var="descriptor" value="${instance.descriptor}"/>
+    <l:layout title="${it.displayName}">
+        <l:main-panel>
+            <f:form name="convert" action="convert" method="post">
+                <h1><l:icon src="${rootURL}/plugin/convert-to-pipeline/images/convert.png"/>   ${it.displayName}</h1>
+                <f:section title="${%Section.Title}">
+                    <f:entry title="${%Field.NewName}" field="newName">
+                        <f:textbox name="newName" field="newName" />
+                    </f:entry>
+                    <f:entry title="${%Field.Recursive}" field="downStream">
+                        <f:checkbox name="downStream" field="downStream" default="true"/>
+                    </f:entry>
+                    <f:block>
+                        <f:nested>
+                            <f:section title="${%Section.Options.Title}">
+                                <f:entry title="${%Field.Jenkinsfile}" field="commitJFile">
+                                    <f:checkbox name="commitJFile" field="commitJFile" default="false" />
+                                </f:entry>
+                                <f:entry title="${%Label.CommitMessage}" field="commitMessage">
+                                    <f:textbox name="commitMessage" value="${%Field.CommitMessage}"/>
+                                </f:entry>
+                            </f:section>
+                        </f:nested>
+                    </f:block>
+                    <f:block>
+                        <f:submit name="Submit" value="${%Button.Submit}"/>
+                    </f:block>
+                </f:section>
+            </f:form>
+            <div style="text-align: center; position: absolute; bottom:50px; width:100%; left:0;">
+                <a href="https://www.infostretch.com/" target="_blank">
+                    <l:icon src="${rootURL}/plugin/convert-to-pipeline/images/infostretch_logo.png"/>
+                </a>
+            </div>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
