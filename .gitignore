@@ -1,4 +1,9 @@
 .idea/
+.classpath
+.project
+.settings/
+pom.xml.releaseBackup
+release.properties
 *.iml
 work/
 target/

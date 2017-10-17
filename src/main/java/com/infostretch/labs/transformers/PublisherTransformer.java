@@ -45,7 +45,7 @@ public class PublisherTransformer {
      * To ensure a new plugin whose transformations needed to be added to publish steps are added to the script;
      * set onlyBuildTrigger to false in that plugin's transformPublisher method.
      */
-    public static boolean onlyBuildTrigger = true;
+
 
     /**
      * Initialise local Transformer variable. This constructor is called in main Transformer class.
@@ -68,7 +68,7 @@ public class PublisherTransformer {
             Element publishers = (Element) transformer.doc.getElementsByTagName("publishers").item(0);
             NodeList publishersList = publishers.getChildNodes();
             transformer.publishSteps = new StringBuffer();
-            onlyBuildTrigger = true;
+            transformer.setOnlyBuildTrigger(true);
             if (publishersList.getLength() > 0) {
                 transformer.publishSteps.append("\n\tstage ('"+transformer.currentJobName+" - Post build actions') {");
                 transformer.publishSteps.append("\n/*\nPlease note this is a direct conversion of post-build actions. \nIt may not necessarily work/behave in the same way as post-build actions work.\nA logic review is suggested.\n*/");
@@ -99,7 +99,7 @@ public class PublisherTransformer {
             if (publishersList.getLength() > 0) {
                 transformer.publishSteps.append(" \n\t}");
             }
-            if(!onlyBuildTrigger) {
+            if(!transformer.getOnlyBuildTrigger()) {
                 transformer.appendToScript(transformer.publishSteps.toString());
             }
         }

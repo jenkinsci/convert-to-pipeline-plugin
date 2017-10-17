@@ -34,7 +34,7 @@ public class Mailer extends Plugins {
 
     @Override
     public void transformPublisher() {
-        PublisherTransformer.onlyBuildTrigger = false;
+        transformer.setOnlyBuildTrigger(false);
         appendPublishSteps("\n\t\t// Mailer notification");
         appendPublishSteps("\n\t\tstep([$class: 'Mailer', notifyEveryUnstableBuild: " + !Boolean.valueOf(getElementByTag("dontNotifyEveryUnstableBuild").getTextContent()) + ", recipients: '" + getElementByTag("recipients").getTextContent() + "', sendToIndividuals: " + getElementByTag("sendToIndividuals").getTextContent() + "])\n");
     }

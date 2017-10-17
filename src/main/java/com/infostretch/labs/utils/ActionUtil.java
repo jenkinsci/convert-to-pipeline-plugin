@@ -59,14 +59,21 @@ public class ActionUtil {
      * @return Returns true if a job with desired new name does not exist.
      */
     public static boolean validateForm(String newName, String originalJob) {
-        Item item;
-        FreeStyleProject orgJob = (FreeStyleProject) Jenkins.getInstance().getItemByFullName(originalJob);
-        newName = defineName(newName, orgJob.getName());
-        if(orgJob.getParent().getClass().equals(Folder.class)) {
-            item = ((Folder) orgJob.getParent()).getItem(newName);
-        }
-        else {
-            item = Jenkins.getInstance().getItem(newName);
+        Item item = null;
+        try {
+            FreeStyleProject orgJob = (FreeStyleProject) Jenkins.getInstance().getItemByFullName(originalJob);
+            if(orgJob != null) {
+                newName = defineName(newName, orgJob.getName());
+                if(orgJob.getParent().getClass().equals(Folder.class)) {
+                    item = ((Folder) orgJob.getParent()).getItem(newName);
+                }
+                else {
+                    item = Jenkins.getInstance().getItem(newName);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return item == null;
         }
         return item == null;
     }

@@ -64,6 +64,7 @@ public class Transformer {
     private Map<String, Object> requestParams;
     private List<String> copyConfigs = new ArrayList<>(Arrays.asList("description", "properties", "triggers"));
     private List<String> transformConfigs = new ArrayList<>(Arrays.asList("label", "scm", "builders", "publishers"));
+    private boolean onlyBuildTrigger = true;
 
     /**
      * Constructor to initialise variables required to process transformation.
@@ -331,6 +332,14 @@ public class Transformer {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void setOnlyBuildTrigger(boolean value) {
+        onlyBuildTrigger = value;
+    }
+
+    public boolean getOnlyBuildTrigger() {
+        return onlyBuildTrigger;
     }
 
 }
