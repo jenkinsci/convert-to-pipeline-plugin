@@ -43,7 +43,7 @@ public class Shell extends Plugins {
         if (unstableValue.length() > 0) {
             appendBuildSteps("\n{ \n def shellReturnStatus = sh returnStatus: true, script: \"\"\" \n" + getElementByTag("command").getTextContent().trim() + " \n \"\"\" \n if(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n}");
         } else {
-            appendBuildSteps("\nsh \"\"\" \n" + getElementByTag("command").getTextContent().trim() + " \n \"\"\"");
+            appendBuildSteps("\nsh '''\n" + getElementByTag("command").getTextContent().trim() + " \n'''");
         }
     }
 }
