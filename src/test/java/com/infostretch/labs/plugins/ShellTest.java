@@ -27,7 +27,7 @@ public class ShellTest {
 
     @Test
     public void transformBuild() {
-        String expectedConversion = "sh '''#!/bin/bash\n" +
+        String expectedConversion = "\t\tsh '''#!/bin/bash\n" +
                 "shell_var=123\n" +
                 "other_var=${shell_var}  # this should not be expanded by groovy! \n" +
                 "'''";
@@ -36,10 +36,10 @@ public class ShellTest {
 
     @Test
     public void transformBuildWithUnstable() {
-        String expectedConversion = "def shellReturnStatus = sh returnStatus: true, script: '''#!/bin/bash\n" +
+        String expectedConversion = "\t\t\tdef shellReturnStatus = sh returnStatus: true, script: '''#!/bin/bash\n" +
                 "echo ${var}\n" +
                 "'''\n" +
-                " if(shellReturnStatus == 2) { currentBuild.result = 'UNSTABLE' } ";
+                "\t\t\tif(shellReturnStatus == 2) { currentBuild.result = 'UNSTABLE' } ";
         assertThat(convertJob("../../../../xml/shell-script-unstable-return.xml"), containsString(expectedConversion));
     }
 }

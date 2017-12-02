@@ -34,7 +34,7 @@ public class Shell extends Plugins {
 
     @Override
     public void transformBuild() {
-        appendBuildSteps("\t\t// Shell build step");
+        appendBuildSteps("\n\t\t// Shell build step");
         Element unstableReturn = getElementByTag("unstableReturn");
         String unstableValue = "";
         if (unstableReturn != null && unstableReturn.getTextContent() != null) {
@@ -47,9 +47,10 @@ public class Shell extends Plugins {
             command = "\n" + command;
         }
         if (unstableValue.length() > 0) {
-            appendBuildSteps("\n{ \n def shellReturnStatus = sh returnStatus: true, script: '''" + command + "\n'''\n if(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n}");
+            appendBuildSteps("\n\t\t{\n\t\t\tdef shellReturnStatus = sh returnStatus: true, script: '''" + command +
+                    "\n'''\n\t\t\tif(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n\t\t}");
         } else {
-            appendBuildSteps("\nsh '''" + command + " \n'''");
+            appendBuildSteps("\n\t\tsh '''" + command + " \n'''");
         }
     }
 }
