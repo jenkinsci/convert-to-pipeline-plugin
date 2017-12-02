@@ -40,15 +40,15 @@ public class Shell extends Plugins {
         if (unstableReturn != null && unstableReturn.getTextContent() != null) {
             unstableValue = unstableReturn.getTextContent();
         }
+        String command = getElementByTag("command").getTextContent().trim();
+        // If the script has a shebang it needs to be on the first line so that the shell parses it
+        if (!command.startsWith("#!")) {
+            // Otherwise insert a newline to make the code more readable
+            command = "\n" + command;
+        }
         if (unstableValue.length() > 0) {
-            appendBuildSteps("\n{ \n def shellReturnStatus = sh returnStatus: true, script: \"\"\" \n" + getElementByTag("command").getTextContent().trim() + " \n \"\"\" \n if(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n}");
+            appendBuildSteps("\n{ \n def shellReturnStatus = sh returnStatus: true, script: '''" + command + "\n'''\n if(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n}");
         } else {
-            String command = getElementByTag("command").getTextContent().trim();
-            // If the script has a shebang it needs to be on the first line so that the shell parses it
-            if (!command.startsWith("#!")) {
-                // Otherwise insert a newline to make the code more readable
-                command = "\n" + command;
-            }
             appendBuildSteps("\nsh '''" + command + " \n'''");
         }
     }
