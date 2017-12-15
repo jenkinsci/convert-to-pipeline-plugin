@@ -26,7 +26,8 @@ public enum PluginClass {
 
     TestNG("hudson.plugins.testng.Publisher"),
     Git("hudson.plugins.git.GitSCM"),
-    ExtendedEmailPublisher("hudson.plugins.emailext.ExtendedEmailPublisher");
+    ExtendedEmailPublisher("hudson.plugins.emailext.ExtendedEmailPublisher"),
+    SecretBuildWrapper("org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper");
 
     private String nodeTag;
 
