@@ -84,7 +84,16 @@ public class Transformer {
         logger.info("Completed conversion of all jobs");
     }
 
-    /** For testing pureposes */
+    /**
+     * For testing purposes
+     *
+     * @param doc Document to convert
+     * @param jobName name of job
+     *
+     * @return string converted document as string
+     *
+     * @throws ParserConfigurationException
+     */
     public String transformXml(Document doc, String jobName) throws ParserConfigurationException {
         initializeConversion();
         this.doc = doc;
@@ -96,10 +105,9 @@ public class Transformer {
 
     private void initializeConversion() {
         appendToScript("// Powered by Infostretch \n\n");
-        appendToScript("timestamps {\n");
     }
     private void finalizeConversion(boolean commitJenkinsfile, String commitMessage) {
-        appendToScript("\n}\n}");
+        appendToScript("\n}");
         appendScriptToXML(commitJenkinsfile, commitMessage);
         writeConfiguration();
     }
@@ -130,11 +138,18 @@ public class Transformer {
     }
 
     protected void transformDocument() throws ParserConfigurationException {
+        boolean timestamps = doc.getElementsByTagName("hudson.plugins.timestamper.TimestamperBuildWrapper").getLength() != 0;
+        if (timestamps) {
+            appendToScript("timestamps {\n");
+        }
         dest = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         flowDefinition = dest.createElement("flow-definition");
         dest.appendChild(flowDefinition);
         doc.getDocumentElement().normalize();
         transformFile();
+        if (timestamps) {
+            appendToScript("\n}");
+        }
     }
 
     /**

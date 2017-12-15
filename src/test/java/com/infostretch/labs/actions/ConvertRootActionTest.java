@@ -27,7 +27,7 @@ public class ConvertRootActionTest {
 
     @Test
     public void transformBuild() {
-        String expectedConversion = "// Powered by Infostretch timestamps { node () { stage ('test - Build') { // Shell build step sh ''' echo \"hello\" ''' } } }";
+        String expectedConversion = "// Powered by Infostretch node () { stage ('test - Build') { // Shell build step sh ''' echo \"hello\" ''' } }";
         expectedConversion = expectedConversion.replaceAll("\\s","");
         assertThat(convertJob("../../../../xml/freestyle-config.xml"), containsString(expectedConversion));
     }
