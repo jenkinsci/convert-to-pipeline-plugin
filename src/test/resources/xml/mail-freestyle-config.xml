@@ -1,0 +1,34 @@
+<project>
+    <actions/>
+    <description/>
+    <keepDependencies>false</keepDependencies>
+    <properties/>
+    <scm class="hudson.scm.NullSCM"/>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers/>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Shell>
+            <command>echo "hello"</command>
+        </hudson.tasks.Shell>
+    </builders>
+    <publishers>
+      <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.37.2">
+        <recipientList>recipient@example.com</recipientList>
+        <contentType>default</contentType>
+        <defaultSubject>default-subject</defaultSubject>
+        <defaultContent>default-content</defaultContent>
+        <attachmentsPattern>*.log</attachmentsPattern>
+        <presendScript>try {(void)"presend";true;} catch (all) {}</presendScript>
+        <postsendScript>>try {(void)"postsend";true;} catch (all) {}</postsendScript>
+        <attachBuildLog>false</attachBuildLog>
+        <compressBuildLog>false</compressBuildLog>
+        <replyTo>replyto@example.com</replyTo>
+        <saveOutput>false</saveOutput>
+      </hudson.plugins.emailext.ExtendedEmailPublisher>
+    </publishers>
+    <buildWrappers/>
+</project>

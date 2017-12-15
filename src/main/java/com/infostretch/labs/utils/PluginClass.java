@@ -25,7 +25,8 @@ package com.infostretch.labs.utils;
 public enum PluginClass {
 
     TestNG("hudson.plugins.testng.Publisher"),
-    Git("hudson.plugins.git.GitSCM");
+    Git("hudson.plugins.git.GitSCM"),
+    ExtendedEmailPublisher("hudson.plugins.emailext.ExtendedEmailPublisher");
 
     private String nodeTag;
 
