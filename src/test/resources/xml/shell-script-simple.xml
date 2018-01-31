@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+    <actions/>
+    <description></description>
+    <keepDependencies>false</keepDependencies>
+    <properties></properties>
+    <assignedNode>linux</assignedNode>
+    <canRoam>false</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers></triggers>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Shell>
+            <!-- The shebang should always be the first thing in the resulting shell script-->
+            <command>#!/bin/bash
+shell_var=123
+other_var=${shell_var}  # this should not be expanded by groovy!
+            </command>
+        </hudson.tasks.Shell>
+    </builders>
+    <publishers></publishers>
+    <buildWrappers></buildWrappers>
+</project>

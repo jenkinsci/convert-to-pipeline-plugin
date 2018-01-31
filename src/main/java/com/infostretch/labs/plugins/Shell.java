@@ -34,16 +34,23 @@ public class Shell extends Plugins {
 
     @Override
     public void transformBuild() {
-        appendBuildSteps("\t\t// Shell build step");
+        appendBuildSteps("\n\t\t// Shell build step");
         Element unstableReturn = getElementByTag("unstableReturn");
         String unstableValue = "";
         if (unstableReturn != null && unstableReturn.getTextContent() != null) {
             unstableValue = unstableReturn.getTextContent();
         }
+        String command = getElementByTag("command").getTextContent().trim();
+        // If the script has a shebang it needs to be on the first line so that the shell parses it
+        if (!command.startsWith("#!")) {
+            // Otherwise insert a newline to make the code more readable
+            command = "\n" + command;
+        }
         if (unstableValue.length() > 0) {
-            appendBuildSteps("\n{ \n def shellReturnStatus = sh returnStatus: true, script: \"\"\" \n" + getElementByTag("command").getTextContent().trim() + " \n \"\"\" \n if(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n}");
+            appendBuildSteps("\n\t\t{\n\t\t\tdef shellReturnStatus = sh returnStatus: true, script: '''" + command +
+                    "\n'''\n\t\t\tif(shellReturnStatus == " + unstableValue + ") { currentBuild.result = 'UNSTABLE' } \n\t\t}");
         } else {
-            appendBuildSteps("\nsh \"\"\" \n" + getElementByTag("command").getTextContent().trim() + " \n \"\"\"");
+            appendBuildSteps("\n\t\tsh '''" + command + " \n'''");
         }
     }
 }
