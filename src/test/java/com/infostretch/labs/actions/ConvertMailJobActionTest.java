@@ -10,7 +10,8 @@ import java.util.HashMap;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class ConvertRootActionTest {
+public class ConvertMailJobActionTest {
+
     private String convertJob(String xmlPath) {
         InputStream is = null;
         try {
@@ -27,8 +28,16 @@ public class ConvertRootActionTest {
 
     @Test
     public void transformBuild() {
-        String expectedConversion = "// Powered by Infostretch node () { stage ('test - Build') { // Shell build step sh ''' echo \"hello\" ''' } }";
+        String expectedConversion = "// Powered by Infostretch node () { stage ('test - Build') { // Shell build step sh ''' echo \"hello\" ''' }\n"
+                                  + "stage ('test - Postbuild actions') {"
+                                  + "\n/*\nPlease note this is a direct conversion of post-build actions. It may not necessarily work/behave in the same way as post-build actions work. A logic review is suggested.\n*/"
+                                  + "\n\t\t// ExtendedEmailPublisher notification"
+                                  + "\n} }";
+        // XXX This is not the right end result...
+
         expectedConversion = expectedConversion.replaceAll("\\s","");
-        assertThat(convertJob("../../../../xml/freestyle-config.xml"), containsString(expectedConversion));
+        String result = convertJob("../../../../xml/mail-freestyle-config.xml");
+        System.out.println(result);
+        assertThat(convertJob("../../../../xml/mail-freestyle-config.xml"), containsString(expectedConversion));
     }
 }

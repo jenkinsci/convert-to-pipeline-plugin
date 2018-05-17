@@ -10,13 +10,14 @@ import java.util.HashMap;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class ConvertFolderActionTest {
+public class ConvertTimestampJobActionTest {
+
     private String convertJob(String xmlPath) {
         InputStream is = null;
         try {
             is = getClass().getResource(xmlPath).openStream();
             Transformer t = new Transformer(new HashMap());
-            String script = t.transformXml(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is), "testfolder/test");
+            String script = t.transformXml(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is), "test");
             script = script.replaceAll("\\s","");
             System.out.println(script);
             return script;
@@ -27,8 +28,8 @@ public class ConvertFolderActionTest {
 
     @Test
     public void transformBuild() {
-        String expectedConversion = "// Powered by Infostretch node () { stage ('testfolder/test - Build') { // Shell build step sh ''' echo \"hello\" ''' } }";
+        String expectedConversion = "// Powered by Infostretch timestamps { node () { stage ('test - Build') { // Shell build step sh ''' echo \"hello\" ''' } } }";
         expectedConversion = expectedConversion.replaceAll("\\s","");
-        assertThat(convertJob("../../../../xml/folder-freestyle-config.xml"), containsString(expectedConversion));
+        assertThat(convertJob("../../../../xml/timestamp-freestyle-config.xml"), containsString(expectedConversion));
     }
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2017 Infostretch Corporation
+ * Copyright 2018 ...
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
  *
@@ -15,37 +15,21 @@
  * For any inquiry or need additional information, please contact labs_support@infostretch.com
  *******************************************************************************/
 
-package com.infostretch.labs.utils;
+package com.infostretch.labs.plugins;
+
+import com.infostretch.labs.transformers.Transformer;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
- * List of Plugin class names mapped to node tags from XML.
- * 
- * @author Mohit Dharamshi
+ * Handles transformation of TimestamperBuildWrapper properties
+ *
+ * @author ...
  */
-public enum PluginClass {
+public class TimestamperBuildWrapper extends Plugins {
 
-    TestNG("hudson.plugins.testng.Publisher"),
-    Git("hudson.plugins.git.GitSCM"),
-    ExtendedEmailPublisher("hudson.plugins.emailext.ExtendedEmailPublisher"),
-    SecretBuildWrapper("org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper");
-
-    private String nodeTag;
-
-    PluginClass(String nodeTag) {
-        this.nodeTag = nodeTag;
+    public TimestamperBuildWrapper(Transformer transformer, Node node) {
+        super(transformer, node);
     }
 
-    /**
-     * Searches all Plugin Classes and returns the one that matches given nodeTag.
-     * @param nodeTag Node tag whose Plugin Class needs to be found.
-     * @return PluginClass that matches given nodeTag.
-     */
-    public static PluginClass searchByTag(String nodeTag) {
-        for (PluginClass plugin : PluginClass.values()) {
-            if (plugin.nodeTag.equals(nodeTag)) {
-                return plugin;
-            }
-        }
-        return null;
-    }
 }
