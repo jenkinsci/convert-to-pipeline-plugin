@@ -68,7 +68,7 @@ public class Git extends Plugins {
         }
 
         if(!repoURL.equalsIgnoreCase(transformer.previousUrl)) {
-            transformer.appendToScript(transformer.currentJobName+ " - Checkout", "checkout([$class: 'GitSCM', branches: [[name: '" + branch + "']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '" + repoCredentials + "', url: '" + repoURL + "']]])");
+            transformer.appendToScript(transformer.currentJobName+ " - Checkout", "checkout([$class: 'GitSCM', branches: [[name: '" + branch + "']], extensions: [], userRemoteConfigs: [[credentialsId: '" + repoCredentials + "', url: '" + repoURL + "']]])");
         }
 
         if(transformer.firstJob) {
